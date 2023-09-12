@@ -18,6 +18,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { TaskService } from '../../services/task/task.service';
+import { Observable, tap, take, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-task-form',
@@ -45,7 +47,8 @@ export class TaskFormComponent implements OnInit, OnChanges {
   constructor(
     private dialogRef: MatDialogRef<TaskFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Task,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private taskService: TaskService
   ) {}
 
   ngOnInit(): void {
@@ -61,6 +64,20 @@ export class TaskFormComponent implements OnInit, OnChanges {
   }
 
   protected onSubmit(): void {
-    this.dialogRef.close(this.form.value);
+    this.handleAction(this.form.value as Task)
+      .pipe(
+        take(1),
+        tap((response) => console.log(response)),
+        tap(() => this.dialogRef.close(this.form.value))
+      )
+      .subscribe();
+  }
+
+  private handleAction(task: Task): Observable<unknown> {
+    if (this.data.id) {
+      return this.taskService.update(task);
+    } else {
+      return this.taskService.create(task);
+    }
   }
 }
