@@ -1,0 +1,45 @@
+<div class="container">
+  <h1 mat-dialog-title>Nueva tarea</h1>
+
+  <div mat-dialog-content class="f-100">
+    <form [formGroup]="form">
+      <p>
+        <mat-form-field appearance="outline" class="f-100">
+          <mat-label>Titulo</mat-label>
+          <input
+            formControlName="title"
+            matInput
+            placeholder="Escribe el titulo..."
+          />
+          <mat-hint>Hint</mat-hint>
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field appearance="outline" class="f-100">
+          <mat-label>Descripción</mat-label>
+          <textarea
+            formControlName="description"
+            matInput
+            placeholder="Escribe la descripción..."
+          ></textarea>
+          <mat-hint>Hint</mat-hint>
+        </mat-form-field>
+      </p>
+    </form>
+  </div>
+
+  <div mat-dialog-actions class="f-100 justify-content">
+    <button mat-raised-button color="warn" (click)="onCancel()">
+      Cancelar
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onSubmit()"
+      cdkFocusInitial
+    >
+      Aceptar
+    </button>
+  </div>
+</div>
