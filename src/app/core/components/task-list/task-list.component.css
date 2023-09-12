@@ -1,3 +1,13 @@
 .t-100 {
   width: 100%;
 }
+
+.mb-4 {
+  margin: 2rem auto;
+}
+
+.table-content {
+  display: flex;
+  overflow-x: auto;
+  width: 100%;
+}

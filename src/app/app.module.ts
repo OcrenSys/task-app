@@ -11,6 +11,7 @@ import { NavbarComponent } from './core/components/navbar/navbar.component';
 import { TaskListComponent } from './core/components/task-list/task-list.component';
 import { TaskFormComponent } from './core/components/task-form/task-form.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [AppComponent, ListComponent, DetailsComponent],
@@ -23,6 +24,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     TaskListComponent,
     TaskFormComponent,
     MatDialogModule,
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

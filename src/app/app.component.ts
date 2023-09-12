@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskFormComponent } from './core/components/task-form/task-form.component';
-import { Task } from './types/Task';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
