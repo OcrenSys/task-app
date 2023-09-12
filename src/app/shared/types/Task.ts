@@ -1,7 +1,6 @@
 export type Task = {
+  id?: number | string;
   title: string;
   description: string;
-  createdAt: string;
-  updatedAt: string;
-  status: 'activa' | 'pendiente' | 'completado';
+  isCompleted: boolean;
 };

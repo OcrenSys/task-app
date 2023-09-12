@@ -5,64 +5,39 @@ import { MatDialog } from '@angular/material/dialog';
 import { TaskFormComponent } from '../task-form/task-form.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
-const TASK_DATA: Task[] | any = [
+const TASK_DATA: Task[] = [
   {
-    title: 'titulo 1',
+    title: 'titulo 10',
     description: 'description',
-    createdAt: '12/12/2023 4:00 pm',
-    updatedAt: '12/12/2023 4:00 pm',
-    status: 'activa',
+    isCompleted: false,
   },
 
   {
-    title: 'titulo 2',
+    title: 'titulo 11',
     description: 'description',
-    createdAt: '12/12/2023 4:00 pm',
-    updatedAt: '12/12/2023 4:00 pm',
-    status: 'activa',
+    isCompleted: false,
   },
   {
-    title: 'titulo 3',
+    title: 'titulo 12',
     description: 'description',
-    createdAt: '12/12/2023 4:00 pm',
-    updatedAt: '12/12/2023 4:00 pm',
-    status: 'activa',
+    isCompleted: false,
   },
   {
-    title: 'titulo 4',
+    title: 'titulo 13',
     description: 'description',
-    createdAt: '12/12/2023 4:00 pm',
-    updatedAt: '12/12/2023 4:00 pm',
-    status: 'activa',
+    isCompleted: false,
   },
   {
-    title: 'titulo 5',
+    title: 'titulo 14',
     description: 'description',
-    createdAt: '12/12/2023 4:00 pm',
-    updatedAt: '12/12/2023 4:00 pm',
-    status: 'activa',
+    isCompleted: false,
   },
   {
-    title: 'titulo 6',
+    title: 'titulo 15',
     description: 'description',
-    createdAt: '12/12/2023 4:00 pm',
-    updatedAt: '12/12/2023 4:00 pm',
-    status: 'activa',
-  },
-  {
-    title: 'titulo 7',
-    description: 'description',
-    createdAt: '12/12/2023 4:00 pm',
-    updatedAt: '12/12/2023 4:00 pm',
-    status: 'activa',
-  },
-  {
-    title: 'titulo 8',
-    description: 'description',
-    createdAt: '12/12/2023 4:00 pm',
-    updatedAt: '12/12/2023 4:00 pm',
-    status: 'activa',
+    isCompleted: true,
   },
 ];
 
@@ -71,17 +46,10 @@ const TASK_DATA: Task[] | any = [
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.css'],
   standalone: true,
-  imports: [MatTableModule, MatButtonModule, MatIconModule],
+  imports: [MatTableModule, MatButtonModule, MatIconModule, MatCheckboxModule],
 })
 export class TaskListComponent {
-  displayedColumns: string[] = [
-    'createdAt',
-    'title',
-    'description',
-    'updatedAt',
-    'status',
-    'option',
-  ];
+  displayedColumns: string[] = ['title', 'description', 'status', 'option'];
   dataSource = TASK_DATA;
 
   constructor(public dialog: MatDialog) {}
@@ -98,5 +66,9 @@ export class TaskListComponent {
       console.log('The dialog was closed');
       if (result) console.log('Result', result);
     });
+  }
+
+  protected handleToggle(task: Task): void {
+    task.isCompleted = !task.isCompleted;
   }
 }

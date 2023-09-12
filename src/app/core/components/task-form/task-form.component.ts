@@ -39,9 +39,7 @@ export class TaskFormComponent implements OnInit, OnChanges {
   protected form = this.fb.group({
     title: [''],
     description: [''],
-    createdAt: [''],
-    updatedAt: [''],
-    status: ['activa'],
+    isCompleted: [true],
   });
 
   constructor(
