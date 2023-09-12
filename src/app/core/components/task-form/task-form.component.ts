@@ -10,7 +10,7 @@ import {
   MatDialogRef,
   MatDialogModule,
 } from '@angular/material/dialog';
-import { Task } from 'src/app/types/Task';
+import { Task } from 'src/app/shared/types/Task';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';

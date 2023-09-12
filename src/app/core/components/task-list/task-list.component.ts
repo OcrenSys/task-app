@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
-import { Task } from 'src/app/types/Task';
+import { Task } from 'src/app/shared/types/Task';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskFormComponent } from '../task-form/task-form.component';
 import { MatIconModule } from '@angular/material/icon';
