@@ -1,3 +1,4 @@
-export const TASK_MODEL: string = 'task';
-export const SERVER_DOMAIN: string = 'localhost:4200';
-export const API_V1: string = 'api/v1';
+export const TASK_MODEL: string = 'tasks';
+export const SERVER_DOMAIN: string =
+  'https://us-central1-taskapp-8ae9b.cloudfunctions.net';
+export const API_V1: string = 'api';

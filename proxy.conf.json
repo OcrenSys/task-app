@@ -1,0 +1,6 @@
+{
+  "/api": {
+    "target": "https://us-central1-taskapp-8ae9b.cloudfunctions.net/api",
+    "secure": false
+  }
+}
