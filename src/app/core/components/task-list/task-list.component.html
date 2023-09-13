@@ -6,12 +6,16 @@
   >
     <ng-container matColumnDef="title">
       <th mat-header-cell *matHeaderCellDef>Titulo</th>
-      <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+      <td mat-cell *matCellDef="let element">
+        {{ element?.title || "" | truncate : 20 }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="description">
       <th mat-header-cell *matHeaderCellDef>Descripción</th>
-      <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+      <td mat-cell *matCellDef="let element">
+        {{ element?.description || "" | truncate : 80 }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="status">
@@ -20,7 +24,7 @@
         <mat-checkbox
           (click)="$event.stopPropagation()"
           (change)="$event ? handleToggle(element) : null"
-          [checked]="element.isCompleted"
+          [checked]="element?.isCompleted || false"
         >
         </mat-checkbox>
       </td>
@@ -41,6 +45,10 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <tr
+      (click)="navigateToDetails(row)"
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+    ></tr>
   </table>
 </div>

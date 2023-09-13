@@ -11,7 +11,7 @@ import {
   MatDialogModule,
 } from '@angular/material/dialog';
 import { Task } from 'src/app/shared/types/Task';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -19,7 +19,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { TaskService } from '../../services/task/task.service';
-import { Observable, tap, take, Subject } from 'rxjs';
+import { Observable, tap, take } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-task-form',
@@ -27,6 +28,7 @@ import { Observable, tap, take, Subject } from 'rxjs';
   styleUrls: ['./task-form.component.css'],
   standalone: true,
   imports: [
+    HttpClientModule,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
@@ -36,6 +38,7 @@ import { Observable, tap, take, Subject } from 'rxjs';
     MatButtonModule,
     MatDialogModule,
   ],
+  providers: [TaskService],
 })
 export class TaskFormComponent implements OnInit, OnChanges {
   protected form = this.fb.group({
@@ -64,13 +67,16 @@ export class TaskFormComponent implements OnInit, OnChanges {
   }
 
   protected onSubmit(): void {
-    this.handleAction(this.form.value as Task)
+    this.dialogRef.close(this.form.value);
+
+    /** todo: remove comment and imlement this functionality */
+    /* this.handleAction(this.form.value as Task)
       .pipe(
         take(1),
         tap((response) => console.log(response)),
         tap(() => this.dialogRef.close(this.form.value))
       )
-      .subscribe();
+      .subscribe(); 
   }
 
   private handleAction(task: Task): Observable<unknown> {
@@ -78,6 +84,6 @@ export class TaskFormComponent implements OnInit, OnChanges {
       return this.taskService.update(task);
     } else {
       return this.taskService.create(task);
-    }
+    }*/
   }
 }
