@@ -8,28 +8,29 @@ import {
   TASK_MODEL,
 } from 'src/app/shared/constants/urls.constants';
 import { Task } from 'src/app/shared/types/Task';
+import { API_V1 } from '../../../shared/constants/urls.constants';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TaskService extends BaseService<any> {
+export class TaskService<T> extends BaseService<T> {
   constructor(protected override readonly _httpClient: HttpClient) {
     super(_httpClient);
   }
 
-  public create(model: Task): Observable<unknown> {
-    return this._create(`${SERVER_DOMAIN}/${TASK_MODEL}`, model);
+  public create<T>(model: T): Observable<unknown> {
+    return this._create<T>(`${SERVER_DOMAIN}/${API_V1}/${TASK_MODEL}`, model);
   }
 
-  public update(model: Task): Observable<unknown> {
-    return this._update(`${SERVER_DOMAIN}/${TASK_MODEL}`, model);
+  public update<T>(model: T): Observable<unknown> {
+    return this._update<T>(`${SERVER_DOMAIN}/${API_V1}/${TASK_MODEL}`, model);
   }
 
-  public list() {
-    return this._list(`${SERVER_DOMAIN}/${TASK_MODEL}`);
+  public list<T>() {
+    return this._list<T>(`${SERVER_DOMAIN}/${API_V1}/${TASK_MODEL}`);
   }
 
-  public delete(id: number) {
-    return this._delete(`${SERVER_DOMAIN}/${TASK_MODEL}/${id}`);
+  public delete<T>(id: number) {
+    return this._delete<T>(`${SERVER_DOMAIN}/${API_V1}/${TASK_MODEL}/${id}`);
   }
 }

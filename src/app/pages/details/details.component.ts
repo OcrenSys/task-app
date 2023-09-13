@@ -6,7 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Task } from 'src/app/shared/types/Task';
 import { MatIconModule } from '@angular/material/icon';
-import { Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 
 @Component({
   selector: 'app-details',
@@ -20,6 +20,7 @@ import { Location } from '@angular/common';
     MatButtonModule,
     MatProgressBarModule,
     MatIconModule,
+    CommonModule,
   ],
 })
 export class DetailsComponent implements OnInit {

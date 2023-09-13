@@ -12,11 +12,15 @@ export class BaseService<T> extends IBaseService<T> {
     super();
   }
 
-  protected _create(url: string, model: T, options?: any): Observable<unknown> {
+  protected _create<T>(
+    url: string,
+    model: T,
+    options?: any
+  ): Observable<unknown> {
     return this._httpClient.post<T>(url, JSON.stringify(model), options || {});
   }
 
-  protected _update(
+  protected _update<T>(
     url: string,
     model: T | null,
     options?: any
@@ -24,11 +28,11 @@ export class BaseService<T> extends IBaseService<T> {
     return this._httpClient.patch(url, JSON.stringify(model), options || {});
   }
 
-  protected _list(url: string): Observable<unknown> {
+  protected _list<T>(url: string): Observable<unknown> {
     return this._httpClient.get(url);
   }
 
-  protected _delete(url: string): Observable<unknown> {
+  protected _delete<T>(url: string): Observable<unknown> {
     return this._httpClient.delete(url);
   }
 }

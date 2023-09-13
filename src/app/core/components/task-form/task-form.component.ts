@@ -51,7 +51,7 @@ export class TaskFormComponent implements OnInit, OnChanges {
     private dialogRef: MatDialogRef<TaskFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Task,
     private fb: FormBuilder,
-    private taskService: TaskService
+    private taskService: TaskService<Task>
   ) {}
 
   ngOnInit(): void {
