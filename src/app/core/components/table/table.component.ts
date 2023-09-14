@@ -15,6 +15,8 @@ import { showSnackBar, sorted } from '../../../shared/utilities/helpers';
 import { MatCardModule } from '@angular/material/card';
 import { FormComponent } from '../form/form.component';
 import { TaskStore } from '../../store/task.store';
+import { HighlightDirective } from '../../directives/highlight/highlight.directive';
+import { StrikethroughDirective } from '../../directives/strikethrough/strikethrough.directive';
 
 @Component({
   selector: 'task-table',
@@ -28,6 +30,8 @@ import { TaskStore } from '../../store/task.store';
     TruncatePipe,
     MatCardModule,
     MatSnackBarModule,
+    HighlightDirective,
+    StrikethroughDirective,
   ],
   providers: [TaskService<Task>],
   templateUrl: './table.component.html',
@@ -78,7 +82,7 @@ export class TableComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(FormComponent, {
       data: {
         title: '',
-        description: ' ',
+        description: '',
       },
       panelClass: 'dialog-responsive',
     });
@@ -123,9 +127,7 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   private reAsssigningCompletedTasks(): void {
-    const _tasks: Task[] = this.dataSource.filter(
-      (task: Task) => task.isCompleted
-    );
+    const _tasks: Task[] = this.dataSource;
     this.taskStore.reAssign(_tasks);
   }
 }

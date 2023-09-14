@@ -30,7 +30,8 @@ h6 {
   margin: 8px 0;
 }
 
-p {
+p,
+.mat-mdc-card-title {
   word-break: break-all;
 }
 
@@ -38,6 +39,7 @@ p {
   margin: 60px auto 32px;
   padding: 0 16px;
   max-width: 999px;
+  padding-bottom: 2rem;
 }
 
 .head {
@@ -48,7 +50,7 @@ p {
 }
 
 .card {
-  margin-top: 2rem;
+  padding: 16px !important;
 }
 
 .card-header {
@@ -76,6 +78,14 @@ p {
 .mh-2 {
   margin-right: 2rem;
   margin-right: 2rem;
+}
+
+.mt-2 {
+  margin-top: 2rem;
+}
+
+.mb-2 {
+  margin-bottom: 2rem;
 }
 
 .justify-content {

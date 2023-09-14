@@ -56,13 +56,13 @@ export class DetailsComponent implements OnInit {
     exitAnimationDuration: string
   ): void {
     const dialogRef = this.dialog.open(DialogConfirmationComponent, {
-      width: '250px',
+      width: '450px',
       enterAnimationDuration,
       exitAnimationDuration,
     });
 
-    dialogRef.afterClosed().subscribe(({ confirmed }) => {
-      if (confirmed) {
+    dialogRef.afterClosed().subscribe((response) => {
+      if (response?.confirmed) {
         this.onDelete();
       }
     });

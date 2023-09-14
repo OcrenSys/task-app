@@ -3,31 +3,32 @@
     (click)="onBack()"
     mat-icon-button
     color="primary"
-    aria-label="Example icon button with a home icon"
+    aria-label="come-back-action-buttom"
   >
     <mat-icon>chevron_left</mat-icon>
   </button>
   <p>Regresar</p>
 </div>
 
-<mat-card class="example-card">
-  <mat-card-header>
+<mat-card class="card">
+  <mat-card-header class="card-header">
     <mat-card-subtitle>{{
       task?.createdAt || "" | date : "short"
     }}</mat-card-subtitle>
     <mat-card-title>{{ task?.title || "" }}</mat-card-title>
   </mat-card-header>
+
   <mat-card-content>
     <p>{{ task?.description || "" }}</p>
-    <mat-divider></mat-divider>
   </mat-card-content>
-  <mat-card-actions>
+
+  <mat-card-actions class="mt-2">
     <button
       class="mh-2"
       (click)="openDeleteConfirmationDialog('100ms', '500ms')"
       mat-raised-button
       color="warn"
-      aria-label="Example icon button with a home icon"
+      aria-label="open-confim-delete-dialog-action"
     >
       <mat-icon>delete</mat-icon>
       Eliminar
@@ -38,15 +39,10 @@
       (click)="openEditModal($event)"
       mat-raised-button
       color="primary"
-      aria-label="Example icon button with a home icon"
+      aria-label="open-edit-dialog-action"
     >
       <mat-icon>edit</mat-icon>
       Editar
     </button>
   </mat-card-actions>
-  <mat-card-footer>
-    <ng-template [ngIf]="task == undefined">
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    </ng-template>
-  </mat-card-footer>
 </mat-card>
