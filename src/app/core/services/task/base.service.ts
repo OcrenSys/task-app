@@ -3,8 +3,7 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IBaseService } from 'src/app/shared/types/base.interface';
-
+import { IBaseService } from 'src/app/shared/classes/Base.class';
 export class BaseService<T> extends IBaseService<T> {
   constructor(protected readonly _httpClient: HttpClient) {
     super();

@@ -1,25 +1,23 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
-import { Task } from 'src/app/shared/types/Task';
+import { Task } from 'src/app/shared/classes/Task.class';
 import { MatDialog } from '@angular/material/dialog';
-import { TaskFormComponent } from '../task-form/task-form.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TaskService } from '../../services/task/task.service';
-import { Subject, take, takeUntil, tap } from 'rxjs';
+import { Subject, take, takeUntil, tap, map } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { NavigationExtras, Router } from '@angular/router';
 import { TruncatePipe } from 'src/app/shared/pipes/truncate/truncate.pipe';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { showSnackBar } from '../../../shared/utilities/helpers';
+import { showSnackBar, sorted } from '../../../shared/utilities/helpers';
 import { MatCardModule } from '@angular/material/card';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { FormComponent } from '../form/form.component';
+import { TaskStore } from '../../store/task.store';
 
 @Component({
-  selector: 'app-task-list',
-  templateUrl: './task-list.component.html',
-  styleUrls: ['./task-list.component.css'],
+  selector: 'task-table',
   standalone: true,
   imports: [
     HttpClientModule,
@@ -27,20 +25,22 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatButtonModule,
     MatIconModule,
     MatCheckboxModule,
-    MatButtonModule,
     TruncatePipe,
     MatCardModule,
     MatSnackBarModule,
   ],
-  providers: [TaskService<Task>],
+  providers: [TaskService<Task>, TaskStore<Task>],
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.css'],
 })
-export class TaskListComponent implements OnInit, OnDestroy {
+export class TableComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['title', 'description', 'status', 'option'];
   dataSource: Task[] = [];
-  protected stop$ = new Subject();
+  protected unsuscribe$ = new Subject();
 
   constructor(
     @Inject(TaskService) private taskService: TaskService<Task>,
+    private taskStore: TaskStore<Task>,
     private readonly dialog: MatDialog,
     private readonly snackBar: MatSnackBar,
     private readonly router: Router
@@ -51,24 +51,45 @@ export class TaskListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.stop$.next(null);
-    this.stop$.complete();
+    this.unsuscribe$.next(null);
+    this.unsuscribe$.complete();
   }
 
   private getList(): void {
     this.taskService
       .list<Task>()
       .pipe(
-        takeUntil(this.stop$),
+        takeUntil(this.unsuscribe$),
+        map((response) => sorted(response as Task[])),
         tap((response) => (this.dataSource = response as Task[]))
       )
-      .subscribe();
+      .subscribe({
+        next: () => {},
+        error: (error) => {
+          console.log(error);
+        },
+        complete: () => {
+          this.reAsssigningCompletedTasks();
+        },
+      });
+  }
+
+  protected openCreateModal() {
+    const dialogRef = this.dialog.open(FormComponent, {
+      data: {
+        title: '',
+        description: ' ',
+      },
+      panelClass: 'dialog-responsive',
+    });
+
+    dialogRef.afterClosed().subscribe(() => this.getList());
   }
 
   protected openEditModal($event: Event, task: Task) {
     if ($event) $event.stopPropagation();
 
-    const dialogRef = this.dialog.open(TaskFormComponent, {
+    const dialogRef = this.dialog.open(FormComponent, {
       data: {
         ...task,
       },
@@ -85,7 +106,11 @@ export class TaskListComponent implements OnInit, OnDestroy {
         take(1),
         tap(() => showSnackBar(this.snackBar, '¡Tarea actualizada!'))
       )
-      .subscribe();
+      .subscribe({
+        next: () => {
+          this.getList();
+        },
+      });
   }
 
   protected navigateToDetails(task: Task): void {
@@ -95,5 +120,12 @@ export class TaskListComponent implements OnInit, OnDestroy {
       },
     };
     this.router.navigate(['details'], extras);
+  }
+
+  private reAsssigningCompletedTasks(): void {
+    const _tasks: Task[] = this.dataSource.filter(
+      (task: Task) => task.isCompleted
+    );
+    this.taskStore.reAssign(_tasks);
   }
 }

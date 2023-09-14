@@ -1,0 +1,20 @@
+<mat-card class="card">
+  <mat-card-header class="card-header">
+    <mat-card-title-group>
+      <mat-card-title>Completadas</mat-card-title>
+      <mat-card-subtitle>Lista de tareas completadas</mat-card-subtitle>
+    </mat-card-title-group>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="table-content">
+      <mat-selection-list #taskSelectionList>
+        <mat-list-option *ngFor="let task of tasks$ | async">
+          {{ task.title }}
+        </mat-list-option>
+      </mat-selection-list>
+
+      <p>Options selected: {{ 0 }}</p>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -10,7 +10,7 @@ import {
   MatDialogRef,
   MatDialogModule,
 } from '@angular/material/dialog';
-import { Task } from 'src/app/shared/types/Task';
+import { Task } from 'src/app/shared/classes/Task.class';
 import { FormBuilder } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -25,9 +25,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { showSnackBar } from 'src/app/shared/utilities/helpers';
 
 @Component({
-  selector: 'app-task-form',
-  templateUrl: './task-form.component.html',
-  styleUrls: ['./task-form.component.css'],
+  selector: 'app-form',
   standalone: true,
   imports: [
     HttpClientModule,
@@ -42,8 +40,10 @@ import { showSnackBar } from 'src/app/shared/utilities/helpers';
     MatSnackBarModule,
   ],
   providers: [TaskService<Task>],
+  templateUrl: './form.component.html',
+  styleUrls: ['./form.component.css'],
 })
-export class TaskFormComponent implements OnInit, OnChanges {
+export class FormComponent implements OnInit, OnChanges {
   private _snackbarMessage = '';
   protected form = this.fb.group({
     title: [''],
@@ -55,7 +55,7 @@ export class TaskFormComponent implements OnInit, OnChanges {
     @Inject(MAT_DIALOG_DATA) public data: Task,
     @Inject(TaskService) private taskService: TaskService<Task>,
     private fb: FormBuilder,
-    private dialogRef: MatDialogRef<TaskFormComponent>,
+    private dialogRef: MatDialogRef<FormComponent>,
     private readonly snackBar: MatSnackBar
   ) {}
 
@@ -74,15 +74,20 @@ export class TaskFormComponent implements OnInit, OnChanges {
     this.dialogRef.close(this.form.value);
 
     this.handleAction(this.form.value as Task)
-      .pipe(
-        take(1),
-        tap(() => {
+      .pipe(take(1))
+      .subscribe({
+        next: () => {
           showSnackBar(this.snackBar, this._snackbarMessage);
           this._snackbarMessage = '';
-        }),
-        tap(() => this.dialogRef.close({ ...this.data, ...this.form.value }))
-      )
-      .subscribe();
+        },
+        error: () => {
+          showSnackBar(this.snackBar, 'Ocurrio un error');
+          this._snackbarMessage = '';
+        },
+        complete: () => {
+          this.dialogRef.close({ ...this.data, ...this.form.value });
+        },
+      });
   }
 
   private handleAction(task: Task): Observable<unknown> {

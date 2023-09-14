@@ -3,9 +3,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { FormComponent } from 'src/app/core/components/form/form.component';
 import { NavbarComponent } from 'src/app/core/components/navbar/navbar.component';
-import { TaskFormComponent } from 'src/app/core/components/task-form/task-form.component';
-import { TaskListComponent } from 'src/app/core/components/task-list/task-list.component';
+import { TableComponent as TaskTable } from 'src/app/core/components/table/table.component';
+import { ListComponent as TaskList } from 'src/app/core/components/list/list.component';
 
 @Component({
   selector: 'app-list',
@@ -16,27 +17,13 @@ import { TaskListComponent } from 'src/app/core/components/task-list/task-list.c
     MatButtonModule,
     MatIconModule,
     NavbarComponent,
-    TaskListComponent,
-    TaskFormComponent,
+    FormComponent,
     MatDialogModule,
     MatCardModule,
+    TaskTable,
+    TaskList,
   ],
 })
 export class ListComponent {
-  constructor(public dialog: MatDialog) {}
-
-  protected openCreateModal() {
-    const dialogRef = this.dialog.open(TaskFormComponent, {
-      data: {
-        title: '',
-        description: ' ',
-      },
-      panelClass: 'dialog-responsive',
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      if (result) console.log('Result', result);
-    });
-  }
+  constructor() {}
 }

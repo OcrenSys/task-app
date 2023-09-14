@@ -6,7 +6,7 @@ import {
   SERVER_DOMAIN,
   TASK_MODEL,
 } from 'src/app/shared/constants/urls.constants';
-import { Task } from 'src/app/shared/types/Task';
+import { Task } from 'src/app/shared/classes/Task.class';
 
 @Injectable({
   providedIn: 'root',

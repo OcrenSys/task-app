@@ -1,20 +1,5 @@
 <ng-container>
-  <mat-card class="card-header">
-    <mat-card-header>
-      <mat-card-title>Tareas</mat-card-title>
-      <mat-card-subtitle>Lista de tareas</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-actions align="end">
-      <button mat-raised-button color="primary" (click)="openCreateModal()">
-        <mat-icon
-          aria-hidden="false"
-          aria-label="Example home icon"
-          fontIcon="add"
-        ></mat-icon>
-        Nueva Tarea
-      </button>
-    </mat-card-actions>
-  </mat-card>
-
-  <app-task-list></app-task-list>
+  <task-table></task-table>
+  <hr />
+  <task-list></task-list>
 </ng-container>
