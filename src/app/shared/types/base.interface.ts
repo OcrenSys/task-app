@@ -11,6 +11,7 @@ export abstract class IBaseService<T> {
 
   protected abstract _update(
     url: string,
+    id: string,
     model: T,
     option: unknown
   ): Observable<unknown>;

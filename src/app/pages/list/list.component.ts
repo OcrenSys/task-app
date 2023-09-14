@@ -3,11 +3,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { NavigationExtras, Router } from '@angular/router';
 import { NavbarComponent } from 'src/app/core/components/navbar/navbar.component';
 import { TaskFormComponent } from 'src/app/core/components/task-form/task-form.component';
 import { TaskListComponent } from 'src/app/core/components/task-list/task-list.component';
-import { Task } from 'src/app/shared/types/Task';
 
 @Component({
   selector: 'app-list',
@@ -27,14 +25,11 @@ import { Task } from 'src/app/shared/types/Task';
 export class ListComponent {
   constructor(public dialog: MatDialog) {}
 
-  protected openDialog() {
+  protected openCreateModal() {
     const dialogRef = this.dialog.open(TaskFormComponent, {
       data: {
-        title: 'title 0',
-        description: 'description ',
-        createdAt: '01/01/2000 1:00 am',
-        updatedAt: '01/01/2000 1:00 am',
-        status: 'activa',
+        title: '',
+        description: ' ',
       },
       panelClass: 'dialog-responsive',
     });

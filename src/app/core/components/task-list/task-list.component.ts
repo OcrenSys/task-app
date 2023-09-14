@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { Task } from 'src/app/shared/types/Task';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,50 +7,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TaskService } from '../../services/task/task.service';
-import { Subject, takeUntil, tap } from 'rxjs';
+import { Subject, take, takeUntil, tap } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { NavigationExtras, Router } from '@angular/router';
 import { TruncatePipe } from 'src/app/shared/pipes/truncate/truncate.pipe';
-
-// const TASK_DATA: Task[] = [
-//   {
-//     title: 'Lorem Ipsum',
-//     description:
-//       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-//     isCompleted: false,
-//   },
-
-//   {
-//     title: 'Lorem Ipsum',
-//     description:
-//       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
-//     isCompleted: false,
-//   },
-//   {
-//     title: 'Lorem Ipsum',
-//     description:
-//       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
-//     isCompleted: false,
-//   },
-//   {
-//     title: 'Lorem Ipsum',
-//     description:
-//       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-//     isCompleted: false,
-//   },
-//   {
-//     title: 'Lorem Ipsum',
-//     description:
-//       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
-//     isCompleted: false,
-//   },
-//   {
-//     title: 'Lorem Ipsum',
-//     description:
-//       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-//     isCompleted: true,
-//   },
-// ];
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { showSnackBar } from '../../../shared/utilities/helpers';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-task-list',
@@ -65,8 +29,10 @@ import { TruncatePipe } from 'src/app/shared/pipes/truncate/truncate.pipe';
     MatCheckboxModule,
     MatButtonModule,
     TruncatePipe,
+    MatCardModule,
+    MatSnackBarModule,
   ],
-  providers: [TaskService],
+  providers: [TaskService<Task>],
 })
 export class TaskListComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['title', 'description', 'status', 'option'];
@@ -74,8 +40,9 @@ export class TaskListComponent implements OnInit, OnDestroy {
   protected stop$ = new Subject();
 
   constructor(
-    public dialog: MatDialog,
-    private taskService: TaskService<Task>,
+    @Inject(TaskService) private taskService: TaskService<Task>,
+    private readonly dialog: MatDialog,
+    private readonly snackBar: MatSnackBar,
     private readonly router: Router
   ) {}
 
@@ -98,22 +65,27 @@ export class TaskListComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  protected onClick(row: Task) {
+  protected openEditModal($event: Event, task: Task) {
+    if ($event) $event.stopPropagation();
+
     const dialogRef = this.dialog.open(TaskFormComponent, {
       data: {
-        ...row,
+        ...task,
       },
       panelClass: 'dialog-responsive',
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      if (result) console.log('Result', result);
-    });
+    dialogRef.afterClosed().subscribe(() => this.getList());
   }
 
-  protected handleToggle(task: Task): void {
-    task.isCompleted = !task.isCompleted;
+  protected handleToggle({ isCompleted, ..._task }: Task): void {
+    this.taskService
+      .update<Task>(_task.id!, { isCompleted: !isCompleted, ..._task })
+      .pipe(
+        take(1),
+        tap(() => showSnackBar(this.snackBar, '¡Tarea actualizada!'))
+      )
+      .subscribe();
   }
 
   protected navigateToDetails(task: Task): void {

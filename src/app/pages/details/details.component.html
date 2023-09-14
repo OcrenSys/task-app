@@ -13,7 +13,7 @@
 <mat-card class="example-card">
   <mat-card-header>
     <mat-card-subtitle>{{
-      task?.createdAt || "" |  date : "short"
+      task?.createdAt || "" | date : "short"
     }}</mat-card-subtitle>
     <mat-card-title>{{ task?.title || "" }}</mat-card-title>
   </mat-card-header>
@@ -24,7 +24,7 @@
   <mat-card-actions>
     <button
       class="mh-2"
-      (click)="onDelete()"
+      (click)="openDeleteConfirmationDialog('100ms', '500ms')"
       mat-raised-button
       color="warn"
       aria-label="Example icon button with a home icon"
@@ -35,7 +35,7 @@
 
     <button
       class="mh-2"
-      (click)="onEdit()"
+      (click)="openEditModal($event)"
       mat-raised-button
       color="primary"
       aria-label="Example icon button with a home icon"
@@ -45,7 +45,7 @@
     </button>
   </mat-card-actions>
   <mat-card-footer>
-    <ng-template [NgIf]="task == undefined">
+    <ng-template [ngIf]="task == undefined">
       <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     </ng-template>
   </mat-card-footer>

@@ -1,0 +1,24 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Eliminar tarea</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p>¿Deseas eliminar esta tarea permanentemente?</p>
+    <mat-divider></mat-divider>
+  </mat-card-content>
+  <mat-card-actions>
+    <button (click)="onCancel()" color="warn" mat-button mat-dialog-close>
+      No
+    </button>
+    <button
+      (click)="onAccept()"
+      color="primary"
+      mat-button
+      mat-dialog-close
+      cdkFocusInitial
+    >
+      Si
+    </button>
+  </mat-card-actions>
+</mat-card>

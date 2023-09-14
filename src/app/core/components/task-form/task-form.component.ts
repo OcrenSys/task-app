@@ -21,6 +21,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { TaskService } from '../../services/task/task.service';
 import { Observable, tap, take } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { showSnackBar } from 'src/app/shared/utilities/helpers';
 
 @Component({
   selector: 'app-task-form',
@@ -37,21 +39,24 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     MatButtonModule,
     MatDialogModule,
+    MatSnackBarModule,
   ],
-  providers: [TaskService],
+  providers: [TaskService<Task>],
 })
 export class TaskFormComponent implements OnInit, OnChanges {
+  private _snackbarMessage = '';
   protected form = this.fb.group({
     title: [''],
     description: [''],
-    isCompleted: [true],
+    isCompleted: [false],
   });
 
   constructor(
-    private dialogRef: MatDialogRef<TaskFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Task,
+    @Inject(TaskService) private taskService: TaskService<Task>,
     private fb: FormBuilder,
-    private taskService: TaskService<Task>
+    private dialogRef: MatDialogRef<TaskFormComponent>,
+    private readonly snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -61,7 +66,6 @@ export class TaskFormComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
   }
-
   protected onCancel(): void {
     this.dialogRef.close();
   }
@@ -69,21 +73,25 @@ export class TaskFormComponent implements OnInit, OnChanges {
   protected onSubmit(): void {
     this.dialogRef.close(this.form.value);
 
-    /** todo: remove comment and imlement this functionality */
-    /* this.handleAction(this.form.value as Task)
+    this.handleAction(this.form.value as Task)
       .pipe(
         take(1),
-        tap((response) => console.log(response)),
-        tap(() => this.dialogRef.close(this.form.value))
+        tap(() => {
+          showSnackBar(this.snackBar, this._snackbarMessage);
+          this._snackbarMessage = '';
+        }),
+        tap(() => this.dialogRef.close({ ...this.data, ...this.form.value }))
       )
-      .subscribe(); 
+      .subscribe();
   }
 
   private handleAction(task: Task): Observable<unknown> {
     if (this.data.id) {
-      return this.taskService.update(task);
+      this._snackbarMessage = '¡Tarea Actualizada!';
+      return this.taskService.update<Task>(this.data.id, task);
     } else {
-      return this.taskService.create(task);
-    }*/
+      this._snackbarMessage = '¡Tarea Agregada!';
+      return this.taskService.create<Task>(task);
+    }
   }
 }

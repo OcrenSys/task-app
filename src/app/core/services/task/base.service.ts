@@ -1,8 +1,6 @@
 import {
   HttpClient,
-  HttpContext,
   HttpHeaders,
-  HttpParams,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IBaseService } from 'src/app/shared/types/base.interface';
@@ -15,17 +13,38 @@ export class BaseService<T> extends IBaseService<T> {
   protected _create<T>(
     url: string,
     model: T,
-    options?: any
   ): Observable<unknown> {
-    return this._httpClient.post<T>(url, JSON.stringify(model), options || {});
+    const headers = new HttpHeaders().set(
+      'Content-Type',
+      'application/json; charset=utf-8'
+    );
+
+    return this._httpClient.post<T>(
+      url,
+      JSON.stringify(model),
+      {
+        headers,
+      } || {}
+    );
   }
 
   protected _update<T>(
     url: string,
-    model: T | null,
-    options?: any
+    id: string,
+    model: T,
   ): Observable<unknown> {
-    return this._httpClient.patch(url, JSON.stringify(model), options || {});
+    const headers = new HttpHeaders().set(
+      'Content-Type',
+      'application/json; charset=utf-8'
+    );
+
+    return this._httpClient.put(
+      `${url}/${id}`,
+      JSON.stringify(model),
+      {
+        headers,
+      } || {}
+    );
   }
 
   protected _list<T>(url: string): Observable<unknown> {

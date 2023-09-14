@@ -1,5 +1,5 @@
 <div class="container">
-  <h1 mat-dialog-title>Nueva tarea</h1>
+  <h1 mat-dialog-title>{{ data.id ? "Actualizar" : "Nueva" }} {{ "Tarea" }}</h1>
 
   <div mat-dialog-content class="f-100">
     <form [formGroup]="form">
