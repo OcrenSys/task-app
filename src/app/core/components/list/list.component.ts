@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { Task } from 'src/app/shared/classes/Task.class';
 import { MatIconModule } from '@angular/material/icon';
@@ -18,7 +11,8 @@ import { MatCardModule } from '@angular/material/card';
 import { AsyncPipe, NgFor } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
 import { TaskStore } from '../../store/task.store';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'task-list',
@@ -33,27 +27,19 @@ import { Observable, Subscription } from 'rxjs';
     MatCardModule,
     MatSnackBarModule,
     MatListModule,
+    MatDividerModule,
     NgFor,
     AsyncPipe,
   ],
-  providers: [],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
 })
-export class ListComponent implements OnInit, OnDestroy, OnChanges {
+export class ListComponent implements OnInit {
   protected tasks$: Observable<Task[]> = new Observable<Task[]>();
-  private subscription: Subscription | undefined;
 
-  constructor(private taskStore: TaskStore<Task>) {
-  }
+  constructor(private taskStore: TaskStore<Task>) {}
 
   ngOnInit(): void {
     this.tasks$ = this.taskStore.store();
-  }
-
-  ngOnChanges() {}
-
-  ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
   }
 }

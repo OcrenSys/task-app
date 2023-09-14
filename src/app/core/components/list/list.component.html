@@ -9,8 +9,9 @@
   <mat-card-content>
     <div class="table-content">
       <mat-list role="list">
-        <mat-list-item role="listitem" *ngFor="let task of tasks$ | async">
-          {{ task.title }}
+        <mat-list-item  role="listitem" *ngFor="let task of tasks$ | async">
+          <p mat-line>{{ task.title }}</p>
+          <mat-divider [inset]="true"></mat-divider>
         </mat-list-item>
       </mat-list>
     </div>
