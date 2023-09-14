@@ -36,36 +36,19 @@ import { Observable, Subscription } from 'rxjs';
     NgFor,
     AsyncPipe,
   ],
-  providers: [TaskStore<Task>],
+  providers: [],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListComponent implements OnInit, OnDestroy, OnChanges {
   protected tasks$: Observable<Task[]> = new Observable<Task[]>();
   private subscription: Subscription | undefined;
 
-  constructor(
-    private taskStore: TaskStore<Task>,
-    private cdr: ChangeDetectorRef
-  ) {
-    this.taskStore.store().subscribe({
-      next: (tasks: Task[]) => {
-        console.log('taskStore suscribed...', tasks);
-        this.cdr.markForCheck();
-      },
-      error: (error) => {
-        console.log('taskStore suscribed error...', error);
-      },
-      complete: () => {
-        console.log('taskStore suscribed completed...');
-      },
-    });
+  constructor(private taskStore: TaskStore<Task>) {
   }
 
   ngOnInit(): void {
     this.tasks$ = this.taskStore.store();
-    // console.log(this.taskStore.state);
   }
 
   ngOnChanges() {}

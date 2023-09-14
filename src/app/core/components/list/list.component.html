@@ -8,13 +8,11 @@
 
   <mat-card-content>
     <div class="table-content">
-      <mat-selection-list #taskSelectionList>
-        <mat-list-option *ngFor="let task of tasks$ | async">
+      <mat-list role="list">
+        <mat-list-item role="listitem" *ngFor="let task of tasks$ | async">
           {{ task.title }}
-        </mat-list-option>
-      </mat-selection-list>
-
-      <p>Options selected: {{ 0 }}</p>
+        </mat-list-item>
+      </mat-list>
     </div>
   </mat-card-content>
 </mat-card>

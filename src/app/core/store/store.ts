@@ -14,8 +14,7 @@ export class Store<T> {
   }
 
   protected setState(nextState: any): void {
-    console.log('set state', nextState);
-    this.state$.next({ ...nextState });
+    this.state$.next(nextState);
   }
 
   public store(): Observable<T[]> {

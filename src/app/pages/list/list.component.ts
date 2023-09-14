@@ -7,6 +7,8 @@ import { FormComponent } from 'src/app/core/components/form/form.component';
 import { NavbarComponent } from 'src/app/core/components/navbar/navbar.component';
 import { TableComponent as TaskTable } from 'src/app/core/components/table/table.component';
 import { ListComponent as TaskList } from 'src/app/core/components/list/list.component';
+import { TaskStore } from 'src/app/core/store/task.store';
+import { Task } from 'src/app/shared/classes/Task.class';
 
 @Component({
   selector: 'app-list',
@@ -23,6 +25,7 @@ import { ListComponent as TaskList } from 'src/app/core/components/list/list.com
     TaskTable,
     TaskList,
   ],
+  providers: [TaskStore<Task>],
 })
 export class ListComponent {
   constructor() {}

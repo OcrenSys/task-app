@@ -29,7 +29,7 @@ import { TaskStore } from '../../store/task.store';
     MatCardModule,
     MatSnackBarModule,
   ],
-  providers: [TaskService<Task>, TaskStore<Task>],
+  providers: [TaskService<Task>],
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],
 })

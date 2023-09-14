@@ -10,17 +10,14 @@ export class TaskStore<T> extends Store<T> {
   }
 
   public init(t: T[]): void {
-    this.setState({ tasks: [] });
+    this.setState(t);
   }
 
   public reAssign(t: T[]): void {
-    this.setState({
-      ...this.state,
-      tasks: t,
-    });
+    this.setState(t);
   }
 
   public reset(): void {
-    this.setState({ tasks: [] });
+    this.setState([]);
   }
 }
