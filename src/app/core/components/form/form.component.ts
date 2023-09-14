@@ -43,7 +43,7 @@ import { showSnackBar } from 'src/app/shared/utilities/helpers';
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.css'],
 })
-export class FormComponent implements OnInit, OnChanges {
+export class FormComponent implements OnInit {
   private _snackbarMessage = '';
   protected form = this.fb.group({
     title: [''],
@@ -63,16 +63,11 @@ export class FormComponent implements OnInit, OnChanges {
     this.form.patchValue(this.data);
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
-  }
   protected onCancel(): void {
     this.dialogRef.close();
   }
 
   protected onSubmit(): void {
-    this.dialogRef.close(this.form.value);
-
     this.handleAction(this.form.value as Task)
       .pipe(take(1))
       .subscribe({
@@ -85,7 +80,7 @@ export class FormComponent implements OnInit, OnChanges {
           this._snackbarMessage = '';
         },
         complete: () => {
-          this.dialogRef.close({ ...this.data, ...this.form.value });
+          this.dialogRef.close();
         },
       });
   }
