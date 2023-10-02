@@ -7,9 +7,7 @@ describe('TableComponent', () => {
   let fixture: ComponentFixture<TableComponent>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [TableComponent]
-    });
+    TestBed.configureTestingModule({});
     fixture = TestBed.createComponent(TableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -7,9 +7,7 @@ describe('DialogConfirmationComponent', () => {
   let fixture: ComponentFixture<DialogConfirmationComponent>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [DialogConfirmationComponent]
-    });
+    TestBed.configureTestingModule({});
     fixture = TestBed.createComponent(DialogConfirmationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

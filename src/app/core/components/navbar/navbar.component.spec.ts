@@ -7,9 +7,7 @@ describe('NavbarComponent', () => {
   let fixture: ComponentFixture<NavbarComponent>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [NavbarComponent]
-    });
+    TestBed.configureTestingModule({});
     fixture = TestBed.createComponent(NavbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

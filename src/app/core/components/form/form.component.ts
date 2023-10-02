@@ -1,10 +1,4 @@
-import {
-  Component,
-  Inject,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
@@ -19,7 +13,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { TaskService } from '../../services/task/task.service';
-import { Observable, tap, take } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { showSnackBar } from 'src/app/shared/utilities/helpers';
@@ -39,7 +33,7 @@ import { showSnackBar } from 'src/app/shared/utilities/helpers';
     MatDialogModule,
     MatSnackBarModule,
   ],
-  providers: [TaskService<Task>],
+  providers: [TaskService<Task>, MatDialogModule, MatDialogRef<FormComponent>],
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.css'],
 })

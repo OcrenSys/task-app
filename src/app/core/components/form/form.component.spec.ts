@@ -7,9 +7,7 @@ describe('FormComponent', () => {
   let fixture: ComponentFixture<FormComponent>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [FormComponent]
-    });
+    TestBed.configureTestingModule({});
     fixture = TestBed.createComponent(FormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

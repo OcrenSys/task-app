@@ -7,9 +7,7 @@ describe('ListComponent', () => {
   let fixture: ComponentFixture<ListComponent>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [ListComponent]
-    });
+    TestBed.configureTestingModule({});
     fixture = TestBed.createComponent(ListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
