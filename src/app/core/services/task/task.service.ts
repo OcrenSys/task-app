@@ -5,8 +5,8 @@ import { BaseService } from './base.service';
 import {
   SERVER_DOMAIN,
   TASK_MODEL,
-} from 'src/app/shared/constants/urls.constants';
-import { Task } from 'src/app/shared/classes/Task.class';
+} from '../../../shared/constants/urls.constants';
+import { Task } from '../../../shared/classes/Task.class';
 
 @Injectable({
   providedIn: 'root',

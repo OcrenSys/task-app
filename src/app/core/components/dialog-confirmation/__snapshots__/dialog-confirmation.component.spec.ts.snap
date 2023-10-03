@@ -1,0 +1,88 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DialogConfirmationComponent should match with snapshot 1`] = `
+<div
+  id="root1"
+>
+  <mat-card
+    class="mat-mdc-card mdc-card card"
+  >
+    <mat-card-header
+      class="mat-mdc-card-header card-header"
+    >
+      <div
+        class="mat-mdc-card-header-text"
+      >
+        <mat-card-title
+          class="mat-mdc-card-title"
+        >
+          Eliminar tarea
+        </mat-card-title>
+      </div>
+    </mat-card-header>
+    <mat-card-content
+      class="mat-mdc-card-content"
+    >
+      <p>
+        ¿Deseas eliminar esta tarea permanentemente?
+      </p>
+    </mat-card-content>
+    <mat-card-actions
+      class="mat-mdc-card-actions mdc-card__actions mt-2"
+    >
+      <button
+        aria-label="cancel-action-buttom"
+        class="mh-2 mdc-button mdc-button--raised mat-mdc-raised-button"
+        mat-raised-button=""
+        mat-ripple-loader-class-name="mat-mdc-button-ripple"
+        mat-ripple-loader-uninitialized=""
+      >
+        <span
+          class="mat-mdc-button-persistent-ripple"
+        />
+        <span
+          class="mdc-button__label"
+        >
+           Cancelar 
+        </span>
+        <span
+          class="mat-mdc-focus-indicator"
+        />
+        <span
+          class="mat-mdc-button-touch-target"
+        />
+      </button>
+      <button
+        aria-label="delete-action-buttom"
+        class="mh-2 mdc-button mdc-button--raised mat-mdc-raised-button mat-warn"
+        color="warn"
+        mat-raised-button=""
+        mat-ripple-loader-class-name="mat-mdc-button-ripple"
+        mat-ripple-loader-uninitialized=""
+      >
+        <span
+          class="mat-mdc-button-persistent-ripple"
+        />
+        <mat-icon
+          aria-hidden="true"
+          class="mat-icon notranslate"
+          role="img"
+        >
+          delete
+        </mat-icon>
+        <span
+          class="mdc-button__label"
+        >
+           Eliminar 
+        </span>
+        <span
+          class="mat-mdc-focus-indicator"
+        />
+        <span
+          class="mat-mdc-button-touch-target"
+        />
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+`;
