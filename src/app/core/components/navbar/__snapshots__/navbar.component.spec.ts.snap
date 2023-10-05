@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NavbarComponent should match snapshot 1`] = `
+<div
+  id="root1"
+>
+  <mat-toolbar
+    class="mat-toolbar mat-primary mat-toolbar-single-row"
+    color="primary"
+  >
+    <span>
+      Task App
+    </span>
+  </mat-toolbar>
+</div>
+`;
