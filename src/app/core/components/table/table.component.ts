@@ -1,22 +1,22 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
-import { Task } from 'src/app/shared/classes/Task.class';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { TaskService } from '../../services/task/task.service';
 import { Subject, take, takeUntil, tap, map } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { NavigationExtras, Router } from '@angular/router';
-import { TruncatePipe } from 'src/app/shared/pipes/truncate/truncate.pipe';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { showSnackBar, sorted } from '../../../shared/utilities/helpers';
 import { MatCardModule } from '@angular/material/card';
+import { showSnackBar, sorted } from '../../../shared/utilities/helpers';
 import { FormComponent } from '../form/form.component';
 import { TaskStore } from '../../store/task.store';
 import { HighlightDirective } from '../../directives/highlight/highlight.directive';
 import { StrikethroughDirective } from '../../directives/strikethrough/strikethrough.directive';
+import { TaskService } from '../../services/task/task.service';
+import { TruncatePipe } from '../../../shared/pipes/truncate/truncate.pipe';
+import { Task } from '../../../shared/classes/Task.class';
 
 @Component({
   selector: 'task-table',

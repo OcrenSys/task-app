@@ -4,7 +4,6 @@ import {
   MatDialogRef,
   MatDialogModule,
 } from '@angular/material/dialog';
-import { Task } from 'src/app/shared/classes/Task.class';
 import { FormBuilder } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -12,11 +11,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { TaskService } from '../../services/task/task.service';
 import { Observable, take } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { showSnackBar } from 'src/app/shared/utilities/helpers';
+import { TaskService } from '../../services/task/task.service';
+import { Task } from '../../../shared/classes/Task.class';
+import { showSnackBar } from '../../../shared/utilities/helpers';
 
 @Component({
   selector: 'app-form',

@@ -32,13 +32,13 @@ export class BaseService<T> extends IBaseService<T> {
     url: string,
     id: string,
     model: T,
-  ): Observable<unknown> {
+  ): Observable<T> {
     const headers = new HttpHeaders().set(
       'Content-Type',
       'application/json; charset=utf-8'
     );
 
-    return this._httpClient.put(
+    return this._httpClient.put<T>(
       `${url}/${id}`,
       JSON.stringify(model),
       {
@@ -47,11 +47,11 @@ export class BaseService<T> extends IBaseService<T> {
     );
   }
 
-  protected _list<T>(url: string): Observable<unknown> {
-    return this._httpClient.get(url);
+  protected _list<T>(url: string): Observable<T> {
+    return this._httpClient.get<T>(url);
   }
 
-  protected _delete<T>(url: string): Observable<unknown> {
-    return this._httpClient.delete(url);
+  protected _delete<T>(url: string): Observable<T> {
+    return this._httpClient.delete<T>(url);
   }
 }
